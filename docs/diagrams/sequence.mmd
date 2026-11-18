@@ -1,0 +1,16 @@
+sequenceDiagram
+  actor User
+  participant Web as Next.js
+  participant API as FastAPI
+  participant DB as PostgreSQL
+  participant Engine as Markov engine
+  User->>Web: Запустити аналіз
+  Web->>API: POST /api/v1/projects/{id}/runs
+  API->>DB: Завантажити сценарій і версію
+  DB-->>API: Незмінні параметри
+  API->>Engine: compile_chain і analyze
+  Engine-->>API: Розподіли, показники, перевірка ODE
+  API->>DB: INSERT run і COMMIT
+  DB-->>API: Ідентифікатор запуску
+  API-->>Web: HTTP 201 і RunDetail
+  Web-->>User: Графік, таблиці, експорт

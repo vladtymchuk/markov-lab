@@ -1,0 +1,63 @@
+{
+  "id": "redundancy",
+  "name": "Сервіс із резервуванням",
+  "description": "Умовний приклад маршрутизації на резерв. Перевірка стану спрямовує 10% запитів до резерву.",
+  "model": {
+    "modules": [
+      {
+        "id": "health",
+        "name": "Перевірка стану",
+        "reliability": 1,
+        "rate": 5
+      },
+      {
+        "id": "primary",
+        "name": "Основний сервіс",
+        "reliability": 0.95,
+        "rate": 2
+      },
+      {
+        "id": "backup",
+        "name": "Резервний сервіс",
+        "reliability": 0.99,
+        "rate": 1.5
+      }
+    ],
+    "tasks": [
+      {
+        "id": "serve",
+        "name": "Обслуговування",
+        "weight": 1
+      }
+    ],
+    "assignments": [
+      {
+        "module_id": "health",
+        "task_id": "serve",
+        "weight": 1
+      }
+    ],
+    "transitions": [
+      {
+        "source": "health",
+        "target": "primary",
+        "probability": 0.9
+      },
+      {
+        "source": "health",
+        "target": "backup",
+        "probability": 0.1
+      },
+      {
+        "source": "primary",
+        "target": "SUCCESS",
+        "probability": 1
+      },
+      {
+        "source": "backup",
+        "target": "SUCCESS",
+        "probability": 1
+      }
+    ]
+  }
+}

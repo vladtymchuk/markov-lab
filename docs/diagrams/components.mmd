@@ -1,0 +1,11 @@
+flowchart LR
+  Browser[React, React Flow, ECharts] --> Web[Next.js і HTTP proxy]
+  Web --> API[FastAPI /api/v1]
+  API --> App[Application services]
+  App --> Domain[Pydantic domain]
+  App --> Engine[NumPy, SciPy, NetworkX]
+  Engine --> Domain
+  App --> Store[SQLAlchemy]
+  Store --> DB[(PostgreSQL)]
+  Alembic --> DB
+  API --> Exports[Pandas і ReportLab]

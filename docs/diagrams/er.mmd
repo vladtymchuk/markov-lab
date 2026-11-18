@@ -1,0 +1,35 @@
+erDiagram
+  PROJECTS ||--|{ REVISIONS : versioned
+  REVISIONS ||--o{ SCENARIOS : configured
+  REVISIONS ||--o{ RUNS : analyzed
+  PROJECTS {
+    uuid id PK
+    string name
+    string description
+    boolean archived
+    timestamp created_at
+    timestamp updated_at
+  }
+  REVISIONS {
+    uuid id PK
+    uuid project_id FK
+    int number
+    jsonb model
+    timestamp created_at
+  }
+  SCENARIOS {
+    uuid id PK
+    uuid revision_id FK
+    string name
+    jsonb settings
+    timestamp created_at
+  }
+  RUNS {
+    uuid id PK
+    uuid revision_id FK
+    string label
+    jsonb settings
+    jsonb result
+    string engine_version
+    timestamp created_at
+  }

@@ -1,0 +1,58 @@
+{
+  "id": "basic",
+  "name": "Базова система Маркова",
+  "description": "Три послідовні модулі. Усі числа умовні.",
+  "model": {
+    "modules": [
+      {
+        "id": "input",
+        "name": "Приймання",
+        "reliability": 0.99,
+        "rate": 1.5
+      },
+      {
+        "id": "verify",
+        "name": "Перевірка",
+        "reliability": 0.97,
+        "rate": 1.5
+      },
+      {
+        "id": "output",
+        "name": "Відповідь",
+        "reliability": 0.995,
+        "rate": 1.5
+      }
+    ],
+    "tasks": [
+      {
+        "id": "request",
+        "name": "Запит",
+        "weight": 1
+      }
+    ],
+    "assignments": [
+      {
+        "module_id": "input",
+        "task_id": "request",
+        "weight": 1
+      }
+    ],
+    "transitions": [
+      {
+        "source": "input",
+        "target": "verify",
+        "probability": 1
+      },
+      {
+        "source": "verify",
+        "target": "output",
+        "probability": 1
+      },
+      {
+        "source": "output",
+        "target": "SUCCESS",
+        "probability": 1
+      }
+    ]
+  }
+}

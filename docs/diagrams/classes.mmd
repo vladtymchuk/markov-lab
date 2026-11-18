@@ -1,0 +1,59 @@
+classDiagram
+  class SoftwareSystem {
+    modules
+    tasks
+    assignments
+    transitions
+    initial
+    manual_p
+    manual_q
+  }
+  class ReliabilityParameters {
+    float reliability
+    float rate
+  }
+  class Module {
+    string id
+    string name
+  }
+  class Task {
+    string id
+    string name
+    float weight
+  }
+  class ModuleTaskAssignment {
+    string module_id
+    string task_id
+    float weight
+  }
+  class Transition {
+    string source
+    string target
+    float probability
+  }
+  class AnalysisSettings {
+    string kind
+    float horizon
+    int points
+    string target
+  }
+  class AnalysisScenario {
+    string name
+  }
+  class AnalysisResult {
+    Matrices matrices
+    TimePoint[] series
+    StateMetric[] metrics
+    float ode_error
+  }
+  SoftwareSystem "1" *-- "1..30" Module
+  SoftwareSystem "1" *-- "0..100" Task
+  SoftwareSystem "1" *-- "*" Transition
+  SoftwareSystem "1" *-- "*" ModuleTaskAssignment
+  ModuleTaskAssignment "*" --> "1" Module
+  ModuleTaskAssignment "*" --> "1" Task
+  Transition "*" --> "1" Module : source
+  ReliabilityParameters <|-- Module
+  AnalysisSettings <|-- AnalysisScenario
+  SoftwareSystem ..> AnalysisResult : compile and analyze
+  AnalysisSettings ..> AnalysisResult : horizon and method

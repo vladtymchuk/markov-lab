@@ -1,0 +1,100 @@
+{
+  "id": "payment",
+  "name": "Обробка платежів",
+  "description": "Навчальна платіжна система із синтетичними показниками. Два вхідні завдання з перетином виконавців.",
+  "model": {
+    "modules": [
+      {
+        "id": "gateway",
+        "name": "API Gateway",
+        "reliability": 0.998,
+        "rate": 2.8
+      },
+      {
+        "id": "auth",
+        "name": "Authentication",
+        "reliability": 0.992,
+        "rate": 1.8
+      },
+      {
+        "id": "payment",
+        "name": "Payment Processing",
+        "reliability": 0.982,
+        "rate": 1.25
+      },
+      {
+        "id": "db",
+        "name": "Database",
+        "reliability": 0.996,
+        "rate": 2.4
+      },
+      {
+        "id": "notify",
+        "name": "Notification Service",
+        "reliability": 0.994,
+        "rate": 1.5
+      }
+    ],
+    "tasks": [
+      {
+        "id": "pay",
+        "name": "Оплата",
+        "weight": 9
+      },
+      {
+        "id": "retry",
+        "name": "Повторне сповіщення",
+        "weight": 1
+      }
+    ],
+    "assignments": [
+      {
+        "module_id": "gateway",
+        "task_id": "pay",
+        "weight": 1
+      },
+      {
+        "module_id": "gateway",
+        "task_id": "retry",
+        "weight": 2
+      },
+      {
+        "module_id": "notify",
+        "task_id": "retry",
+        "weight": 1
+      }
+    ],
+    "transitions": [
+      {
+        "source": "gateway",
+        "target": "auth",
+        "probability": 1
+      },
+      {
+        "source": "auth",
+        "target": "payment",
+        "probability": 1
+      },
+      {
+        "source": "payment",
+        "target": "db",
+        "probability": 1
+      },
+      {
+        "source": "db",
+        "target": "notify",
+        "probability": 0.88
+      },
+      {
+        "source": "db",
+        "target": "SUCCESS",
+        "probability": 0.12
+      },
+      {
+        "source": "notify",
+        "target": "SUCCESS",
+        "probability": 1
+      }
+    ]
+  }
+}
