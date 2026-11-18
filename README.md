@@ -21,8 +21,7 @@ docker compose up --build
 
 ## Документація
 
-- [Керівництво користувача](docs/user-guide.md) і [сценарій захисту](docs/defense-guide.md).
+- [Керівництво користувача](docs/user-guide.md)
 - [Математичні моделі](docs/mathematical-models.md), [архітектура](docs/architecture.md) та [API](docs/api.md).
 - [Матриця вимог](docs/requirements-matrix.md), [перевірки](docs/test-results.md) та [межі](docs/limitations.md).
-- Пояснювальна записка у форматах [DOCX](docs/reports/explanatory-note.docx) і [PDF](docs/reports/explanatory-note.pdf).
 - [Статус реалізації](IMPLEMENTATION_STATUS.md).
